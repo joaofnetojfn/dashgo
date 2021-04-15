@@ -1,4 +1,4 @@
-import { createServer, Model, Factory, Response, ActiveModelSerializer } from 'miragejs';
+import { createServer, Model, Factory, Response } from 'miragejs';
 import faker from 'faker';
 
 type User = {
@@ -9,9 +9,6 @@ type User = {
 
 export function  makeServer() {
     const server = createServer({
-        serializers: {
-            application: ActiveModelSerializer,
-        },
     
         models: {
             user: Model.extend<Partial<User>>({})
@@ -49,7 +46,6 @@ export function  makeServer() {
 
                 const users = this.serialize(schema.all('user'))
                     .users
-                    .sort((a,b) => a.name - b.name)
                     .slice(pageStart, pageEnd)
 
                 return new Response(
@@ -58,6 +54,7 @@ export function  makeServer() {
                     { users }
                 )
             });
+            
             this.get('/users/:id');
             this.post('/users');
 
