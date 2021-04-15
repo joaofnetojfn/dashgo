@@ -1,6 +1,7 @@
-import { Flex, Button, Stack } from "@chakra-ui/react";
+import { Flex, Button, Stack, Box } from "@chakra-ui/react";
 import { Input } from '../components/Form/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { signIn } from 'next-auth/client';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,13 +23,16 @@ export default function SignIn() {
 
   const { errors } = formState;
 
-  const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log(values);
-  }
+   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
+    signIn('Credentials', {
+      email: values.email,
+      password: values.password,
+      callbackUrl: `${window.location.origin}/dashboard`
+    })
+   }
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
+    <Flex w="100vw" h="80vh" align="center" justify="center">
       <Flex
         as="form"
         width="100%"
@@ -48,6 +52,12 @@ export default function SignIn() {
           Entrar
         </Button>
       </Flex>
+      
+      <Box mt="auto" marginLeft="-290px">
+        <Button isLoading={formState.isSubmitting} onClick={() => signIn('GitHub')} marginTop="6" size="lg" colorScheme="twitter">
+          Entrar com gitHub
+        </Button>
+      </Box>
     </Flex>
   );
 }
