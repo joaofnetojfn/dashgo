@@ -1,6 +1,7 @@
 import { Flex, Button, Stack } from "@chakra-ui/react";
 import { Input } from '../components/Form/Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { signIn } from 'next-auth/client'
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,8 +24,11 @@ export default function SignIn() {
   const { errors } = formState;
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log(values);
+    signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      callbackUrl: `${window.location.origin}/dashboard`
+    })
   }
 
   return (
