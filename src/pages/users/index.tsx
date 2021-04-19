@@ -21,16 +21,20 @@ import NextLink from "next/link";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 import { Header } from "../../components/Header";
+import { Authentication }from "../../components/AuthenticationComp";
 import { Sidebar } from "../../components/Sidebar";
 import { Pagination } from "../../components/Pagination";
 import { useUsers } from "../../services/hooks/useUsers";
 import { useState } from 'react';
 import { queryClient } from '../../services/queryClient';
 import { api } from '../../services/api';
+import { useSession } from 'next-auth/client';
 
 export default function UserList() {
 
   const [page, setPage] = useState(1);
+
+  const [ session ] = useSession();
 
   const {data, isLoading, isFetching, error} = useUsers(page);
 
@@ -49,7 +53,7 @@ export default function UserList() {
     })
   }
 
-  return (
+  return session ? (
     <Box>
       <Header />
 
@@ -145,5 +149,7 @@ export default function UserList() {
         </Box>
       </Flex>
     </Box>
-  );
+  )  : (
+        <Authentication />
+    );
 }

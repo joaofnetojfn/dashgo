@@ -24,7 +24,6 @@ export default function SignIn() {
   const { errors } = formState;
 
    const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    alert(`${window.location.origin}`)
     signIn('credentials', {
       email: values.email,
       password: values.password,

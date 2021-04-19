@@ -1,7 +1,9 @@
-import { Flex, Box, SimpleGrid, Text, theme } from "@chakra-ui/react";
+import { Flex, Box, SimpleGrid, Text, theme, Button, Link as ChakraLink } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
 import { Header }from "../components/Header";
+import { Authentication }from "../components/AuthenticationComp";
 import { Sidebar } from "../components/Sidebar";
+import { useSession } from 'next-auth/client';
 
 const Chart = dynamic(() => import('react-apexcharts'),{
     ssr: false,
@@ -59,7 +61,8 @@ const series=[
 ];
 
 export default function Dashboard() {
-    return(
+    const [ session ] = useSession();
+    return session ? (
         <Flex 
             direction="column" 
             h="95vh">
@@ -107,6 +110,7 @@ export default function Dashboard() {
                 </SimpleGrid>
             </Flex>
         </Flex>
-        
+    ) : (
+        <Authentication />
     )
 }
