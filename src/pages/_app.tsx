@@ -12,8 +12,6 @@ if (process.env.NODE_ENV == 'development'){
   makeServer();
 }
 
-
-
 function MyApp({ Component, pageProps }: AppProps) {
   return(
     <NextAuthProvider session={pageProps.session}>

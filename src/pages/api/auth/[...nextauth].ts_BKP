@@ -11,6 +11,7 @@ const providers = [
 
                 if (user) return { status: 'success', data: user }
             } catch (e) {
+                alert("tttt")
                 throw new Error(e.message)
             }
         }
@@ -19,6 +20,7 @@ const providers = [
 
 const callbacks = {
     async signIn(user, account, profile) {
+        console.log('ddd')
         return true
     }
 }

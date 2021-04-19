@@ -24,7 +24,8 @@ export default function SignIn() {
   const { errors } = formState;
 
    const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
-    signIn('Credentials', {
+    alert(`${window.location.origin}`)
+    signIn('credentials', {
       email: values.email,
       password: values.password,
       callbackUrl: `${window.location.origin}/dashboard`
@@ -52,9 +53,8 @@ export default function SignIn() {
           Entrar
         </Button>
       </Flex>
-      
       <Box mt="auto" marginLeft="-290px">
-        <Button isLoading={formState.isSubmitting} onClick={() => signIn('GitHub')} marginTop="6" size="lg" colorScheme="twitter">
+        <Button isLoading={formState.isSubmitting} onClick={() => signIn('github')} marginTop="6" size="lg" colorScheme="twitter">
           Entrar com gitHub
         </Button>
       </Box>
